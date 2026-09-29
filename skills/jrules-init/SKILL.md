@@ -42,7 +42,9 @@ file — for files that already exist, merge the missing JRules pieces in and sh
   tell the user the project copies override the global ones and offer to delete them if they're identical in intent.
 
 ## 4. GitHub (ask before each outward action)
-- If there's no remote: offer `gh repo create <name> --private --source . --remote origin`.
+- If there's no remote: offer `gh repo create <name> --private --source . --remote origin`. For a brand-new repo,
+  create it from `main` with `--push` so `main` exists on GitHub (this initial publish is the one sanctioned push
+  of `main`; the git hook only guards `git push`), then switch to the task branch.
 - Push the branch and open the PR with `gh pr create --fill` (or a written body).
 - Offer to protect `main` so PRs are required. Use a ruleset:
   `gh api -X POST repos/{owner}/{repo}/rulesets --input <json>` with

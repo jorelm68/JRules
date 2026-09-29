@@ -33,16 +33,17 @@ const block = (msg) => {
 // Split chained commands so `git switch -c x && git commit` is judged per segment.
 for (const segment of command.split(/&&|\|\||;|\n/)) {
   const s = segment.trim();
+  // The hook runs before the command, so a branch switch earlier in the same command makes the current-branch
+  // check unreliable; don't judge implicit targets (current branch / HEAD) in that case.
+  const switchesFirst = /\bgit\s+(switch|checkout)\b/.test(command.slice(0, command.indexOf(s)));
   if (/^git\s+(-C\s+\S+\s+)?commit\b/.test(s)) {
     const branch = git("branch --show-current");
-    // A branch switch earlier in the same command makes the current-branch check unreliable; allow it.
-    const switchesFirst = /\bgit\s+(switch|checkout)\b/.test(command.slice(0, command.indexOf(s)));
     const isFirstCommit = git("rev-parse --verify HEAD") === ""; // a new repo needs one commit on main to branch from
     if (PROTECTED.has(branch) && !switchesFirst && !isFirstCommit) block(`refusing to commit directly on '${branch}'.`);
   }
   if (/^git\s+(-C\s+\S+\s+)?push\b/.test(s)) {
     const tokens = s.split(/\s+/);
-    const branch = git("branch --show-current");
+    const branch = switchesFirst ? "" : git("branch --show-current");
     const targetsProtected = tokens.some((t) => {
       const dest = (t.includes(":") ? t.split(":").pop() : t).replace(/^\+/, "").replace(/^refs\/heads\//, "");
       return PROTECTED.has(dest) || (dest === "HEAD" && PROTECTED.has(branch));
