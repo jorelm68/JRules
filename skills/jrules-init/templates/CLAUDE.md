@@ -4,7 +4,7 @@
 # {{Project name}}
 
 {{One-paragraph purpose: what this is, who it's for, what matters most.}}
-Global working rules (git/PR policy, delegation, shared docs) come from JRules via `~/.claude/CLAUDE.md`.
+Global working rules (git/PR policy, delegation, shared docs) come from the JRules plugin.
 Code map: [docs/KNOWLEDGE.md](docs/KNOWLEDGE.md) — consult it before searching.
 
 ## Stack

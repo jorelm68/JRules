@@ -5,8 +5,8 @@ description: Finish a task the JRules way — verify, rebase on main, update sha
 
 # Ship
 
-Ask once, if it isn't obvious: **is this the final PR of the task?** (A task split across several PRs has
-intermediate PRs that must not touch shared docs.)
+Ask once, if it isn't obvious: **is this the final PR of the task?** (A task split across several PRs — a PR
+group — has intermediate PRs that must not touch shared docs or any file another PR in the group touches.)
 
 1. **Branch check.** If on `main`/`master`, move the work to a branch `<type>/<slug>` first.
 2. **Verify.** Run the project's lint/typecheck/test/build commands (delegate to `grunt-worker`). Fix or report
@@ -18,6 +18,10 @@ intermediate PRs that must not touch shared docs.)
    - new list/data-heavy feature or public page → `/perf` build rules check.
    Fix findings, or list accepted risks in the PR under Verification. None triggered → say "gates: n/a".
 4. **Commit** any remaining work in logical commits.
+   **PR-group overlap check** (intermediate PRs): compare this branch's files
+   (`git diff --name-only origin/main...HEAD`) with each other open PR of the group
+   (`git diff --name-only origin/main...origin/<their-branch>`). Any shared file → move that edit to the group's
+   final PR (revert it here; note it under "Notes for shared docs").
 5. **Rebase** onto the latest main: `git fetch origin && git rebase origin/main`. Resolve conflicts; re-verify if
    anything non-trivial changed.
 6. **Shared docs — final PR only.** As the last commit (`docs: update handoff, gotchas, knowledge map`):
@@ -25,8 +29,10 @@ intermediate PRs that must not touch shared docs.)
    - `GOTCHA.md` — add traps discovered during the task; remove ones that no longer apply.
    - `docs/KNOWLEDGE.md` — update nodes/edges/flows the task touched; fix anything that misled you.
    - `CLAUDE.md` — only if commands, stack, or project rules changed.
+   Also apply the edits other PRs of the group deferred (files they shared).
    Intermediate PR: don't touch those files; put the notes under "Notes for shared docs" in the PR body.
 7. **Push & PR.** `git push -u origin HEAD`, then `gh pr create` with a body following
    `.github/pull_request_template.md` (what/why, changes, verification, shared-doc notes). Don't merge unless the
    user asks.
-8. **Report** the PR link and verification results in two or three lines.
+8. **Report** the PR link and verification results in two or three lines. When the user merges, the git-pulse
+   hook reports it and the `sync` skill handles cleanup and rebasing the rest of the group.

@@ -1,14 +1,16 @@
 # JRules — global working agreement
 
-These rules apply to every project. A project's own CLAUDE.md adds project specifics and wins on conflict.
-Source of truth: `C:/Users/jorel/JRules` (edit there, never in `~/.claude`).
+These rules apply to every project (delivered by the JRules plugin, github.com/jorelm68/JRules). A project's own
+CLAUDE.md adds project specifics and wins on conflict. Skills and agents named here may appear namespaced as
+`jrules:<name>`. Prefer absolute paths; on Windows the Bash tool is Git Bash.
 
-## Environment
-- Windows machine: the Bash tool is Git Bash; prefer absolute paths. Node is available for scripts.
-
-## Session start
+## Task start (every new task or prompt that starts new work)
+- The git-pulse digest (injected at session start, and on prompts when something changed) shows branch state,
+  stale branches, and open PRs. If it flags anything — or it's missing (no `gh`) — run the **`sync`** skill first:
+  audit the previous PR group (CI, conflicts, review comments, merged/closed), then clean up. Nothing flagged →
+  start directly; don't spend tokens re-checking.
 - `HANDOFF.md` and `GOTCHA.md` are imported by the project CLAUDE.md, so they are already in context — act on them.
-- If the project has no `HANDOFF.md`/`GOTCHA.md`/`docs/KNOWLEDGE.md`, suggest running `/jrules-init`.
+- If the project has no `HANDOFF.md`/`GOTCHA.md`/`docs/KNOWLEDGE.md` or no JRules setup, suggest `/jrules-init`.
 
 ## Knowledge graph (token budget)
 - `docs/KNOWLEDGE.md` is the project's map: nodes (modules, data stores, external services, key concepts) with
@@ -55,11 +57,17 @@ these areas, load that skill's matching section** (not the whole thing):
 - Never commit or push to `main`/`master`. Start every task on a branch: `<type>/<short-slug>`
   (`feat/`, `fix/`, `chore/`, `docs/`, `refactor/`). A hook blocks commits/pushes to the default branch.
 - Commit in small, logical steps with clear messages. Every task ends with a pushed branch and an open PR (`/ship`).
-- **Shared docs are only edited in the final PR of a task:** `HANDOFF.md`, `GOTCHA.md`, `docs/KNOWLEDGE.md`, and
-  `CLAUDE.md`. Intermediate PRs (and parallel sessions/worktrees) never touch them; collect notes in the PR
-  description instead. The final PR rebases on the latest `main` first, then updates the shared docs as its last
-  commit — this keeps parallel work from conflicting.
-- Never force-push a shared branch, never merge your own PR unless the user asks, never skip hooks.
+- **PR groups (several PRs from one task/prompt):** plan them up front — list the files each PR will touch. Any
+  file touched by more than one PR in the group, plus the shared docs (`HANDOFF.md`, `GOTCHA.md`,
+  `docs/KNOWLEDGE.md`, `CLAUDE.md`), is edited **only in the group's final PR**. Intermediate PRs stay independent
+  (mergeable in any order) and put their notes in the PR description. The final PR is opened last, rebased on the
+  latest `main` after the others merge, and does the shared edits as its last commit. `/ship` checks overlap.
+- **After a merge** (git-pulse reports it, or the user says they merged): run the `sync` skill's after-merge
+  steps — update local `main`, delete merged branches, rebase remaining PRs of the group, re-check their CI.
+- **Clean up as you go:** merged/gone branches, prunable worktrees, and superseded PRs you created. Ask before
+  deleting anything unmerged, dropping stashes, or closing PRs you didn't open.
+- Never force-push a shared branch (`--force-with-lease` on your own task branch after a rebase is fine), never
+  merge your own PR unless the user asks, never skip hooks.
 
 ## Shared doc formats
 - `HANDOFF.md` — current state for the next session: what's done, what's in flight (open PRs/branches), next steps,

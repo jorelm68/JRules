@@ -18,9 +18,12 @@ file — for files that already exist, merge the missing JRules pieces in and sh
   `main` with just a README first, so `main` exists to open a PR against).
 
 ## 3. Files (from `templates/`, filling every `{{placeholder}}`)
+- `.claude/settings.json` — merge in `templates/claude-settings.json` (keep existing keys). This pins JRules to the
+  repo itself: anyone or any session (including cloud sessions) opening the project gets the plugin, even on a
+  machine without the user-level install. Commit it.
 - `CLAUDE.md` — project name, purpose, stack, commands, project rules. Keep the `@HANDOFF.md` / `@GOTCHA.md`
   imports at the top. If a CLAUDE.md exists, add only the imports and anything clearly missing; don't restate
-  global JRules rules (they load from `~/.claude/CLAUDE.md` automatically).
+  global JRules rules (they load from the JRules plugin automatically).
 - `HANDOFF.md`, `GOTCHA.md` — seed with what you actually know; empty sections are fine.
 - `docs/KNOWLEDGE.md` — for existing code, build a real first map (delegate the sweep to `Explore` and write the
   map yourself from its report). For an empty project, leave the skeleton.

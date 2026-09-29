@@ -1,0 +1,10 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "jrules",
+  "description": "Engineering standards for every project: git/PR discipline, security, legal-risk, performance, and design rules with on-demand skills, guard hooks, and a decision council.",
+  "author": {
+    "name": "jorelm68"
+  },
+  "repository": "https://github.com/jorelm68/JRules",
+  "license": "MIT"
+}

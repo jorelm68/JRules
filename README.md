@@ -1,52 +1,49 @@
 # JRules
 
-One source of truth for how Claude Code works across all my projects.
+My engineering rulebook for Claude Code, packaged as a **Claude Code plugin** (with its own marketplace). One
+source of truth for how every project is built: git/PR discipline, security, legal risk, performance, and design.
+Set a project up once; after that, prompts don't need to repeat any of it.
 
-## How it's layered
+## What's in it
 
-| Layer | Where | Applies to | Updates |
-|---|---|---|---|
-| **Global rules** — git/PR policy, delegation, shared-doc rules, knowledge-graph usage | `global/CLAUDE.md` → imported by `~/.claude/CLAUDE.md` | every project, automatically | live |
-| **Build standards** — security, legal, performance, design rules that apply while building | `global/CLAUDE.md` (short always-on rules) + skills (full checklists, loaded only when relevant) | every project | live |
-| **Subagents** — `grunt-worker` (Haiku), `implementer` (Sonnet), `council-advisor` (Sonnet) | `global/agents/` → copied to `~/.claude/agents/` | every project | re-run `install.mjs` |
-| **Skills** — `/jrules-init`, `/ship`, `/secure`, `/legal`, `/perf`, `/design`, `/council` | `global/skills/` → linked into `~/.claude/skills/` | every project | live |
-| **Enforcement** — hooks blocking commits/pushes to `main` (`guard-git`) and secrets in frontend code or git (`guard-secrets`) | `global/hooks/` → `~/.claude/settings.json` | every project | live |
-| **Third-party tools** — design skills, playwright-cli, Context7, Supabase, Figma MCP | installed by `tools.mjs`; see [TOOLS.md](TOOLS.md) | every project | re-run `tools.mjs` |
-| **Per-project files** — CLAUDE.md (with Standards profile), HANDOFF.md, GOTCHA.md, docs/KNOWLEDGE.md, PR template (with standards gates); web apps also get security.txt, Dependabot, and a secrets/dependency CI scan | `global/skills/jrules-init/templates/` | created in each repo by `/jrules-init` | per project |
-| **GitHub rules** — require PRs to `main` | GitHub ruleset, set by `/jrules-init` | each repo | per repo |
+| Part | Where | What it does |
+|---|---|---|
+| **Always-on rules** | `RULES.md` | Git/PR policy (incl. PR groups and cleanup), delegation to cheap models, build standards. Injected at session start (~1.4k tokens total always-on). |
+| **Skills** (on demand) | `skills/` | `jrules-init` (set up a repo) · `ship` (verify, gates, PR) · `sync` (audit PRs, clean up, resync after merges) · `secure` · `legal` · `perf` · `design` · `council` |
+| **Agents** | `agents/` | `grunt-worker` (Haiku: scans, tests, mechanical edits) · `implementer` (Sonnet) · `council-advisor` (Sonnet) |
+| **Hooks** (hard guarantees) | `hooks/` | `guard-git`: no commits/pushes to `main` · `guard-secrets`: no secrets in frontend code or git · `git-pulse`: git/PR digest at session start, and on later prompts only when something changed (merge, closed PR, red CI) |
+| **Per-project templates** | `skills/jrules-init/templates/` | CLAUDE.md (+ Standards profile), HANDOFF.md, GOTCHA.md, docs/KNOWLEDGE.md, PR template, `.claude/settings.json`, security.txt, Dependabot, CI security scan |
+| **Third-party tools** | `tools.mjs`, [TOOLS.md](TOOLS.md) | Design skills, playwright-cli, Context7, Supabase, Figma MCP |
 
-Rules in CLAUDE.md are guidance Claude follows; the hooks and GitHub rulesets are the hard guarantees.
+## Using it
 
-## Setup (once per machine)
-
+**1. On your machine (once)** — every project you open gets JRules:
 ```bash
-node install.mjs   # rules, skills, agents, hooks
-node tools.mjs     # third-party design/browser/docs tools (see TOOLS.md; `--dry-run` to preview)
+git clone https://github.com/jorelm68/JRules && cd JRules
+node install.mjs     # installs the plugin at user scope (and removes the old pre-plugin install)
+node tools.mjs       # optional third-party tools (--dry-run to preview)
 ```
 
-## New project
+**2. In each repo (new or existing)** — open Claude Code in it and run `/jrules-init` (or `/jrules:jrules-init`).
+It scaffolds the per-project files and commits `.claude/settings.json` pointing at this repo, so the project
+carries JRules with it: cloud sessions, other machines, and collaborators get the plugin automatically.
 
-Make the folder, open Claude Code in it, run `/jrules-init`. The same command works to retrofit an existing project.
+**3. Anywhere else (no install)** — tell Claude: *"Set this repo up with JRules — follow BOOTSTRAP.md in
+github.com/jorelm68/JRules."* [BOOTSTRAP.md](BOOTSTRAP.md) is the single-file manual; it also covers non-Claude
+agents (copy RULES.md as AGENTS.md — a snapshot that won't auto-update).
 
-## Skills
+The repo is private: machines need git access to it. For cloud sessions, add the JRules repo to the session or
+environment, or make this repo public (it holds no secrets).
 
-| Skill | When it runs | What it does |
-|---|---|---|
-| `/secure` | before writing auth/API/DB/upload/webhook/payment code; pre-ship; scanner results | Security checklist (secrets, RLS, sessions, validation, XSS, uploads, webhooks, rate limits, CSP/headers, TOCTOU) + diff-scoped audit |
-| `/legal` | sign-up, billing, email, analytics, uploads, new processors; pre-launch | Age gate, cancel/renewal, delete account, unsubscribe, cookies, fonts, session replay, DMCA, alt text, no SMS; Terms + Privacy templates |
-| `/perf` | data-heavy features, public pages, "it's slow" | Static pages, compression, batched writes, optimistic UI, bottleneck tracing |
-| `/design` | any UI work | PRODUCT.md/DESIGN.md from a reference, token-only build rules, playwright screenshot loop, guidelines audit |
-| `/council` | automatically before expensive-to-reverse decisions, or on request | Five advisors (Contrarian, First Principles, Expansionist, Outsider, Executor) + chairman verdict |
+## Updating the rules
 
-Token budget: only a short summary of the standards is always loaded; each skill's checklist sections load
-on demand, audits are scoped to the branch diff, and mechanical scans run on Haiku.
+Edit, commit, push. The plugin is versioned by git commit (no manual version bumps). Then:
+- this machine: `node install.mjs` (or `claude plugin marketplace update jrules && claude plugin update jrules@jrules`)
+- projects: pick up changes on their next plugin update.
+
+A project's own CLAUDE.md wins on conflicts; a project `.claude/agents/<same-name>.md` overrides a JRules agent.
 
 ## End of every task
 
-`/ship` — verify, run the standards gates the diff triggers, rebase on main, update shared docs (final PR of the task only), push, open a PR.
-
-## Changing the rules
-
-Edit files under `global/`, commit and push this repo. Re-run `node install.mjs` only if you changed agents or
-added a new skill/hook. Project-level `.claude/agents/<same-name>.md` overrides a global agent; a project's
-CLAUDE.md wins on conflicts.
+`/ship` — verify, run the standards gates the diff triggers, check PR-group file overlap, rebase, update shared
+docs (final PR of a group only), push, open a PR. When you merge, git-pulse notices and `sync` cleans up.
