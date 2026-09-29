@@ -9,7 +9,7 @@ Set a project up once; after that, prompts don't need to repeat any of it.
 | Part | Where | What it does |
 |---|---|---|
 | **Always-on rules** | `RULES.md` | Git/PR policy (incl. PR groups and cleanup), delegation to cheap models, build standards. Injected at session start (~1.4k tokens total always-on). |
-| **Skills** (on demand) | `skills/` | `jrules-init` (set up a repo) · `ship` (verify, gates, PR) · `sync` (audit PRs, clean up, resync after merges) · `secure` · `legal` · `perf` · `design` · `council` |
+| **Skills** (on demand) | `skills/` | `jrules-init` (set up a repo) · `ship` (verify, gates, PR) · `sync` (audit PRs, clean up, resync after merges) · `secure` · `security-audit` (Cloudflare's multi-agent codebase audit, vendored) · `legal` · `perf` · `design` · `council` |
 | **Agents** | `agents/` | `grunt-worker` (Haiku: scans, tests, mechanical edits) · `implementer` (Sonnet) · `council-advisor` (Sonnet) |
 | **Hooks** (hard guarantees) | `hooks/` | `guard-git`: no commits/pushes to `main` · `guard-secrets`: no secrets in frontend code or git · `git-pulse`: git/PR digest at session start, and on later prompts only when something changed (merge, closed PR, red CI) |
 | **Per-project templates** | `skills/jrules-init/templates/` | CLAUDE.md (+ Standards profile), HANDOFF.md, GOTCHA.md, docs/KNOWLEDGE.md, PR template, `.claude/settings.json`, security.txt, Dependabot, CI security scan |

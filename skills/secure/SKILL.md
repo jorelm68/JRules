@@ -1,6 +1,6 @@
 ---
 name: secure
-description: Security standard and audit for web apps — auth, sessions, RLS, secrets, input validation, XSS, uploads, webhooks, rate limiting, headers/CSP, TOCTOU. Use BEFORE writing code that touches auth, data access, APIs, payments, uploads, webhooks, or user data, and before shipping such changes. Also when the user says "security check", "secure this", or pastes scanner results (UpGuard, etc.).
+description: Security standard and audit for web apps — auth, sessions, RLS, secrets, input validation, XSS, uploads, webhooks, rate limiting, headers/CSP, TOCTOU. Use BEFORE writing code that touches auth, data access, APIs, payments, uploads, webhooks, or user data, and before shipping such changes. Also when the user says "security check", "secure this", or pastes scanner results (UpGuard, etc.). Full codebase audits and pen-tests go to `security-audit`.
 ---
 
 # Secure
@@ -26,7 +26,19 @@ Keep it cheap and scoped:
    real trade-off). Never weaken a check to make something pass.
 6. **Report** in ≤10 lines: fixed · needs user action (dashboards, key rotation) · accepted risks with reason.
 
+## Mode 3 — deep audit (`/secure deep`, "audit/pen-test this codebase", before launch or a major release)
+Hand off to the **`security-audit`** skill (Cloudflare's, vendored in jrules) in its full audit mode: isolated
+hunters per trust boundary, a fresh verifier per candidate, validated `findings.json`, and `REPORT.md`. It's a
+multi-agent run — milestones, not per PR.
+1. Propose a profile (`quick` for a first look or re-run, `standard`, `deep` for high stakes) and an agent budget;
+   confirm with the user. Output stays outside the repo (default `~/security-audit-skill/<repo>/run-<N>`).
+2. It executes target code only in an OS-enforced sandbox (no network, allowlisted env, write-limited); without
+   one it keeps leads as `needs_validation` — say so rather than running code unsandboxed.
+3. Then fix confirmed findings as in Mode 2 steps 5–6 (on a branch, one PR per root cause or a PR group), and list
+   `needs_validation` items as user actions. Re-runs are additive: point it at the previous run directory.
+
 ## Hard rules (never negotiable)
 - A leaked secret is rotated first, then purged from history — purging alone doesn't un-leak it.
-- Offensive tools (Strix, scanners) only against apps the user owns, preferably local/staging.
+- Offensive tools (Strix, scanners, `security-audit` execution) only against code/apps the user owns, preferably
+  local/staging.
 - Never print secret values in chat, logs, PRs, or commits — refer to them by variable name.

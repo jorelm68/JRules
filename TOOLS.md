@@ -35,6 +35,7 @@ from each repo, not whole collections (installing all of taste-skill + Emil's + 
 | Tool | What it does | jrules use | Install |
 |---|---|---|---|
 | [Strix](https://github.com/usestrix/strix) | Autonomous AI pentest agents that attack your app in a Docker sandbox and report/validate findings | Occasional pre-launch pass, **only against your own app, local or staging** — never production or anything you don't own | Needs Docker. `curl -sSL https://strix.ai/install \| bash` (macOS/Linux/WSL), then `STRIX_LLM=<provider/model> LLM_API_KEY=<key> strix --target ./` or `--target https://staging.yourapp.com`. Costs LLM tokens per run — run it at milestones, not per PR. |
+| [security-audit](https://github.com/cloudflare/security-audit-skill) (Cloudflare) | Six-phase multi-agent codebase audit: recon → coverage-led hunting → independent verification → validated `findings.json` + `REPORT.md` | `/secure deep` and "audit/pen-test this codebase"; before launch or a major release. Executes target code only in an OS-enforced sandbox; writes outside the repo | **Bundled in the plugin** (vendored in `skills/security-audit/`, MIT) — nothing to install. Don't also `npx skills add` it, or two copies load. Refresh: `node scripts/sync-vendored.mjs` |
 | gitleaks | Finds secrets in git history | CI workflow scaffolded by `/jrules-init`; `/secure` runs it locally if installed | `winget install gitleaks` / `brew install gitleaks` |
 
 ## Not wired in (on purpose)

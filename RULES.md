@@ -29,7 +29,8 @@ CLAUDE.md adds project specifics and wins on conflict. Skills and agents named h
   subagent output. Give subagents a self-contained brief — they start cold.
 - Do tiny tasks (a single read or one-line edit) inline — a cold subagent costs more than it saves.
 - Audits (security, legal, design, perf) are scoped to the branch diff unless asked for `full`; mechanical scans
-  go to `grunt-worker`, which returns hits only. Screenshots only of changed views.
+  go to `grunt-worker`, which returns hits only. Screenshots only of changed views. Whole-codebase security audits
+  and pen-tests use **`security-audit`** (multi-agent; milestones, not per PR).
 
 ## Build standards (always on)
 Build secure, legally safe, fast, and polished from the first commit — never "fix it before launch". The project

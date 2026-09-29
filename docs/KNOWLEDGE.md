@@ -9,6 +9,7 @@
 - [[hooks]] — hook wiring and guard/pulse scripts · `hooks/`
 - [[kg]] — knowledge-graph query tool · `scripts/kg.mjs`
 - [[skills]] — on-demand skills (init, ship, sync, secure, legal, perf, design, council) · `skills/`
+- [[vendored]] — third-party skills shipped in the plugin (security-audit) · `skills/security-audit/`, `scripts/sync-vendored.mjs`
 - [[agents]] — subagents on cheap model tiers · `agents/`
 - [[templates]] — per-project files created by jrules-init · `skills/jrules-init/templates/`
 - [[installers]] — plugin install and third-party tools · `install.mjs`, `tools.mjs`
@@ -41,7 +42,15 @@
 ### skills — on-demand skills
 - **Files:** `skills/`
 - **Purpose:** jrules-init, ship, sync, secure, legal, perf, design, council; reference files load per section.
-- **Edges:** delegates-to → [[agents]] · scaffolds → [[templates]] · uses → [[kg]]
+- **Edges:** delegates-to → [[agents]] · scaffolds → [[templates]] · uses → [[kg]] · hands-off-to → [[vendored]]
+
+### vendored — third-party skills shipped in the plugin
+- **Files:** `skills/security-audit/`, `scripts/sync-vendored.mjs`
+- **Purpose:** Cloudflare's `security-audit` (MIT): six-phase multi-agent codebase audit with validated
+  `findings.json`. Copied verbatim from upstream (commit in `UPSTREAM.md`) so cloud sessions and collaborators get
+  it without `tools.mjs`; never edited here.
+- **Edges:** used-by → [[skills]] (`/secure deep`) · used-by → [[rules]] · documented-in → [[docs]]
+- **Entry points:** `node scripts/sync-vendored.mjs [name]` (refresh from upstream)
 
 ### agents — subagents
 - **Files:** `agents/`
@@ -71,3 +80,5 @@
 ## Decisions
 - Plugin over symlinked ~/.claude install — works in cloud sessions and per-repo opt-in (PR #2).
 - Map is queried, not read: only the Index is always in context; nodes load on demand via [[kg]].
+- Third-party skills are installed globally by `tools.mjs`, except ones every project needs everywhere (cloud
+  included), which are vendored into the plugin instead — `security-audit`.

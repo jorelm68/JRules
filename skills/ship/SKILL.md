@@ -17,6 +17,8 @@ group — has intermediate PRs that must not touch shared docs or any file anoth
    - UI files → `/design` step 3 (screenshots at 390/1440 px, console clean, guidelines audit).
    - new list/data-heavy feature or public page → `/perf` build rules check.
    Fix findings, or list accepted risks in the PR under Verification. None triggered → say "gates: n/a".
+   Launch or major release with no `security-audit` run since the last one → suggest `/secure deep` (don't
+   run it per PR).
 4. **Commit** any remaining work in logical commits.
    **PR-group overlap check** (intermediate PRs): compare this branch's files
    (`git diff --name-only origin/main...HEAD`) with each other open PR of the group
