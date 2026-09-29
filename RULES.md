@@ -62,6 +62,9 @@ these areas, load that skill's matching section** (not the whole thing):
   `docs/KNOWLEDGE.md`, `CLAUDE.md`), is edited **only in the group's final PR**. Intermediate PRs stay independent
   (mergeable in any order) and put their notes in the PR description. The final PR is opened last, rebased on the
   latest `main` after the others merge, and does the shared edits as its last commit. `/ship` checks overlap.
+- **Always watch every PR you open** until it's merged or closed: subscribe to its activity when the environment
+  supports it (e.g. `subscribe_pr_activity` in cloud sessions), otherwise rely on git-pulse and re-check at each
+  prompt. Fix red CI and conflicts on your own PRs, address review comments, and don't ask whether to watch.
 - **After a merge** (git-pulse reports it, or the user says they merged): run the `sync` skill's after-merge
   steps — update local `main`, delete merged branches, rebase remaining PRs of the group, re-check their CI.
 - **Clean up as you go:** merged/gone branches, prunable worktrees, and superseded PRs you created. Ask before

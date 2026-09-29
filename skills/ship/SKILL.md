@@ -34,5 +34,7 @@ group — has intermediate PRs that must not touch shared docs or any file anoth
 7. **Push & PR.** `git push -u origin HEAD`, then `gh pr create` with a body following
    `.github/pull_request_template.md` (what/why, changes, verification, shared-doc notes). Don't merge unless the
    user asks.
-8. **Report** the PR link and verification results in two or three lines. When the user merges, the git-pulse
+8. **Watch the PR** (always, don't ask): subscribe to its activity if the environment supports it; otherwise
+   git-pulse reports CI/conflict/merge changes on later prompts. Drive it to green until merged or closed.
+9. **Report** the PR link and verification results in two or three lines. When the user merges, the git-pulse
    hook reports it and the `sync` skill handles cleanup and rebasing the rest of the group.
