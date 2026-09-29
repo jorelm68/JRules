@@ -32,8 +32,7 @@ carries JRules with it: cloud sessions, other machines, and collaborators get th
 github.com/jorelm68/JRules."* [BOOTSTRAP.md](BOOTSTRAP.md) is the single-file manual; it also covers non-Claude
 agents (copy RULES.md as AGENTS.md — a snapshot that won't auto-update).
 
-The repo is private: machines need git access to it. For cloud sessions, add the JRules repo to the session or
-environment, or make this repo public (it holds no secrets).
+The repo is public, so any machine or cloud session can fetch the plugin without extra access.
 
 ## Updating the rules
 
