@@ -1,0 +1,118 @@
+<!-- JRules Terms of Service template. Fill every {{placeholder}}; delete sections marked [if ...] that don't apply.
+     Not legal advice — have a lawyer review before launch, especially §13–§15 (arbitration, class waiver). The
+     arbitration and class-waiver sections only bind users who actively agreed (clickwrap at sign-up). -->
+
+# Terms of Service
+
+_Effective: {{YYYY-MM-DD}} · Version {{N}}_
+
+These Terms of Service ("Terms") are an agreement between you and {{Legal entity name}} ("{{Short name}}", "we",
+"us") governing your use of {{App name}} and related websites and services (the "Service"). By creating an
+account or using the Service you agree to these Terms and our [Privacy Policy]({{/privacy}}). **Please read §13
+(binding individual arbitration and class action waiver): it affects how disputes are resolved.**
+
+## 1. Eligibility
+You must be at least {{MIN_AGE}} years old to use the Service. By using it you confirm you meet this requirement
+and can form a binding contract. We may close accounts we believe belong to someone under this age.
+
+## 2. Your account
+You are responsible for your account credentials and for activity under your account. Tell us promptly at
+{{support email}} if you suspect unauthorized use. Provide accurate information and keep it up to date.
+
+## 3. Subscriptions, billing, and cancellation [if paid]
+- **Automatic renewal.** Paid plans renew automatically at the end of each {{billing period}} at the then-current
+  price, charged to your payment method, **until you cancel**. Prices and the renewal date are shown before you
+  subscribe and in your account settings.
+- **Free trials.** If you start a free trial, you will be charged {{price}} per {{period}} when the trial ends on the
+  date shown at sign-up unless you cancel before then. We will email you before the trial converts.
+- **Cancel anytime** in Settings → Billing → Cancel subscription. Cancellation takes effect at the end of the
+  current billing period; you keep access until then. {{Refund policy: e.g. "Payments are non-refundable except
+  where required by law." / "We refund within 14 days of the first charge on request."}}
+- **Price changes.** We will give you at least {{30}} days' notice by email before a price change applies to you.
+- Payments are processed by Stripe; we do not store full card numbers.
+
+## 4. Acceptable use
+You agree not to: break the law or infringe others' rights; upload malware or attempt to access accounts, systems,
+or data you're not authorized to; probe, scan, or load-test the Service without written permission; scrape it
+beyond what our robots.txt allows; resell or reverse engineer it except where law permits; harass, abuse, or
+harm others; or use it to send spam.
+
+## 5. Your content [if users post/upload content]
+You keep ownership of content you submit ("Your Content"). You grant us a worldwide, non-exclusive, royalty-free
+license to host, store, reproduce, and display Your Content only as needed to operate and improve the Service.
+You confirm you have the rights to Your Content and that it doesn't violate these Terms or the law. We may remove
+content that we believe violates these Terms.
+
+## 6. Copyright complaints (DMCA) [if users post/upload content]
+We respond to notices of alleged infringement under the Digital Millennium Copyright Act. Send notices to our
+designated agent: {{Agent name}}, {{postal address}}, {{dmca email}}. A notice must include the elements required
+by 17 U.S.C. § 512(c)(3). We may terminate accounts of repeat infringers. If your content was removed and you
+believe it was a mistake, you may send a counter-notice to the same agent.
+
+## 7. Our intellectual property
+The Service, including its software, design, and trademarks, is owned by us or our licensors and protected by law.
+We grant you a limited, revocable, non-transferable license to use the Service under these Terms.
+
+## 8. Third-party services
+The Service relies on third parties (for example payment, hosting, and email providers). Their services are
+governed by their own terms, and we are not responsible for them.
+
+## 9. Suspension and termination
+You may stop using the Service and delete your account at any time in Settings → Delete account. **We may suspend
+or terminate your access, or remove content, at our discretion, at any time, with or without notice**, including
+if we believe you violated these Terms, created risk or legal exposure for us, or if required by law. Sections that
+by their nature should survive termination (including §5 license for backups, and §10–§16) survive.
+
+## 10. Disclaimer of warranties
+**THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR
+STATUTORY, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.
+WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, ERROR-FREE, OR THAT DATA WILL NOT BE LOST.**
+[if AI features] Outputs generated by AI features may be inaccurate; verify them before relying on them.
+
+## 11. Limitation of liability
+**TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, REVENUE, DATA, OR GOODWILL, ARISING OUT OF OR RELATED TO
+THE SERVICE. OUR TOTAL LIABILITY FOR ALL CLAIMS RELATING TO THE SERVICE IS LIMITED TO THE GREATER OF (A) THE AMOUNT
+YOU PAID US IN THE 12 MONTHS BEFORE THE EVENT GIVING RISE TO THE CLAIM AND (B) US ${{100}}.** Some jurisdictions do
+not allow these limitations, so they apply to you only to the extent permitted.
+
+## 12. Indemnification
+You will defend, indemnify, and hold harmless {{Short name}} and its owners, employees, and agents from any claims,
+damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising from Your
+Content, your use or misuse of the Service, or your violation of these Terms or of anyone's rights.
+
+## 13. Dispute resolution: binding individual arbitration and class action waiver
+- **Informal resolution first.** Before filing a claim, you and we agree to try to resolve the dispute informally
+  for 60 days after written notice (to us: {{legal email}}).
+- **Arbitration.** Any dispute arising out of or relating to these Terms or the Service will be resolved by
+  **final and binding individual arbitration** administered by {{the American Arbitration Association under its
+  Consumer Arbitration Rules / JAMS}}, rather than in court, except that either party may bring an individual claim
+  in small-claims court, or seek injunctive relief for intellectual-property misuse. **You and we waive the right to
+  a jury trial.**
+- **Class action waiver.** **Claims may be brought only in an individual capacity, not as a plaintiff or class
+  member in any purported class, collective, consolidated, or representative proceeding.** The arbitrator may not
+  consolidate claims of more than one person. If this waiver is found unenforceable for a claim, that claim
+  proceeds in court (per §14), not in arbitration.
+- **Fees.** Payment of arbitration fees is governed by the administrator's consumer rules.
+- **30-day opt-out.** You may opt out of this §13 by emailing {{legal email}} within 30 days of first accepting
+  these Terms, with your name and account email. Opting out doesn't affect the rest of the Terms.
+- If you live in the EU, UK, or another place where this section is not permitted for consumers, it does not apply
+  to you, and nothing in these Terms limits your mandatory consumer rights.
+
+## 14. Governing law and venue
+These Terms are governed by the laws of the State of {{State}}, {{Country}}, and applicable U.S. federal law,
+without regard to conflict-of-laws rules. For any claim not subject to arbitration, you and we submit to the
+exclusive jurisdiction of the state and federal courts located in {{County}}, {{State}}.
+
+## 15. Changes to these Terms
+We may update these Terms. For material changes we will notify you by email or in the app at least {{30}} days
+before they take effect; continued use after that means you accept them. Changes to §13 don't apply to disputes
+we already know about.
+
+## 16. General
+These Terms (with the Privacy Policy) are the entire agreement between us. If a provision is unenforceable, the
+rest remains in effect. Our failure to enforce a provision isn't a waiver. You may not assign these Terms without
+our consent; we may assign them in a merger or sale. Notices to you go to your account email.
+
+## 17. Contact
+{{Legal entity name}}, {{postal address}} · {{support email}}
