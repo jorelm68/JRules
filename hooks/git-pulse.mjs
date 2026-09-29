@@ -112,7 +112,22 @@ try {
   }));
 } catch {}
 
+// Knowledge map: inject only its Index (capped) plus the query command, never the whole file.
+const knowledge = () => {
+  const top = sh("git rev-parse --show-toplevel");
+  const kg = path.join(path.dirname(path.dirname(fileURLToPath(import.meta.url))), "scripts", "kg.mjs");
+  const cmd = `node "${kg.replaceAll("\\", "/")}"`;
+  let text = "";
+  try { text = fs.readFileSync(path.join(top ?? cwd, "docs", "KNOWLEDGE.md"), "utf8"); } catch {
+    return "";
+  }
+  const idx = text.replace(/<!--[\s\S]*?-->/g, "").match(/^## Index\n([\s\S]*?)(?=^## |$(?![\s\S]))/m)?.[1].trim().split("\n") ?? [];
+  const shown = idx.slice(0, 40).join("\n") + (idx.length > 40 ? `\n… ${idx.length - 40} more: ${cmd} index` : "");
+  return `\n\n## Knowledge map index (docs/KNOWLEDGE.md)\n${shown || "(no ## Index section — run: " + cmd + " index)"}\n` +
+    `Query instead of reading the file: ${cmd} query <id> | owner <path> | check`;
+};
+
 if (SESSION) {
-  emit("SessionStart", `${rules()}\n\n## Git status at session start (JRules git-pulse)\n${lines.join("\n")}\nFollow "Task start" in the rules above before new work.`);
+  emit("SessionStart", `${rules()}${knowledge()}\n\n## Git status at session start (jrules git-pulse)\n${lines.join("\n")}\nFollow "Task start" in the rules above before new work.`);
 }
-emit("UserPromptSubmit", lines.length ? `JRules git-pulse — changes since last check:\n${lines.join("\n")}\nRun the \`sync\` skill's after-merge steps before continuing.` : "");
+emit("UserPromptSubmit", lines.length ? `jrules git-pulse — changes since last check:\n${lines.join("\n")}\nRun the \`sync\` skill's after-merge steps before continuing.` : "");

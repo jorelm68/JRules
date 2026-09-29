@@ -2,7 +2,12 @@
 
 <!-- The project's knowledge graph. Read this before searching the code; jump to the files named here.
      Nodes are things (modules, stores, services, concepts); edges say how they connect.
-     Edited only in the final PR of a task. Terse: one line per fact. -->
+     Edited only in the final PR of a task. Terse: one line per fact.
+     Only the Index is loaded each session; nodes are fetched with `kg.mjs query <id>` — keep the Index to one line
+     per node and in sync with the ### sections (`kg.mjs check` verifies). -->
+
+## Index
+- [[{{node-id}}]] — {{what it is, a few words}} · `{{main path}}`
 
 ## Nodes
 

@@ -48,7 +48,7 @@ const git = (args) => {
   }
 };
 const block = (msg) => {
-  process.stderr.write(`JRules guard-secrets: ${msg}\n`);
+  process.stderr.write(`jrules guard-secrets: ${msg}\n`);
   process.exit(2);
 };
 

@@ -1,16 +1,16 @@
 # Third-party tools
 
-What each tool is, whether JRules uses it, and how it's wired in. `node tools.mjs` installs the recommended set
+What each tool is, whether jrules uses it, and how it's wired in. `node tools.mjs` installs the recommended set
 (global, so every project gets it); the commands are listed below if you'd rather run them yourself.
 
 **Token rule:** every installed skill puts its description into every session's context, and overlapping design
-skills fire on the same prompts with conflicting advice. So JRules installs **only the specific skills it uses**
+skills fire on the same prompts with conflicting advice. So jrules installs **only the specific skills it uses**
 from each repo, not whole collections (installing all of taste-skill + Emil's + Vercel's collections would add
 ~40 skills to every session).
 
 ## Design
 
-| Tool | What it does | JRules use | Install |
+| Tool | What it does | jrules use | Install |
 |---|---|---|---|
 | [taste-skill](https://github.com/Leonxlnx/taste-skill) | Anti-"AI slop" design taste (layout variance, motion, density dials) + `redesign-existing-projects` for upgrading existing UI | Aesthetic direction in `/design` | `npx skills add Leonxlnx/taste-skill -s design-taste-frontend -s redesign-existing-projects -a claude-code -g -y` |
 | [web-design-guidelines](https://github.com/vercel-labs/agent-skills) (Vercel) | Audits UI code against Vercel's interface guidelines (a11y, forms, focus, motion, typography) | Final audit step in `/design` and `/ship` | `npx skills add vercel-labs/agent-skills -s web-design-guidelines -a claude-code -g -y` |
@@ -23,7 +23,7 @@ from each repo, not whole collections (installing all of taste-skill + Emil's + 
 
 ## Build, test, docs
 
-| Tool | What it does | JRules use | Install |
+| Tool | What it does | jrules use | Install |
 |---|---|---|---|
 | [playwright-cli](https://github.com/microsoft/playwright-cli) | Claude opens the browser, clicks, fills forms, takes screenshots/snapshots | `/design` verify loop; perf traces; checking CSP console errors | `npm i -g @playwright/cli@latest` then `playwright-cli install --skills -g` |
 | [Context7](https://github.com/upstash/context7) | Current docs for the exact library versions you use | Global rule: look up APIs instead of coding from memory | `npx ctx7 setup --claude` (OAuth; writes the MCP config) |
@@ -32,7 +32,7 @@ from each repo, not whole collections (installing all of taste-skill + Emil's + 
 
 ## Security testing
 
-| Tool | What it does | JRules use | Install |
+| Tool | What it does | jrules use | Install |
 |---|---|---|---|
 | [Strix](https://github.com/usestrix/strix) | Autonomous AI pentest agents that attack your app in a Docker sandbox and report/validate findings | Occasional pre-launch pass, **only against your own app, local or staging** — never production or anything you don't own | Needs Docker. `curl -sSL https://strix.ai/install \| bash` (macOS/Linux/WSL), then `STRIX_LLM=<provider/model> LLM_API_KEY=<key> strix --target ./` or `--target https://staging.yourapp.com`. Costs LLM tokens per run — run it at milestones, not per PR. |
 | gitleaks | Finds secrets in git history | CI workflow scaffolded by `/jrules-init`; `/secure` runs it locally if installed | `winget install gitleaks` / `brew install gitleaks` |
@@ -41,12 +41,12 @@ from each repo, not whole collections (installing all of taste-skill + Emil's + 
 
 **OmniRoute** ([repo](https://github.com/diegosouzapw/OmniRoute)) is a local AI gateway (`npm i -g omniroute`,
 endpoint `http://localhost:20128/v1`) that routes requests across hundreds of providers, including free tiers.
-JRules doesn't route Claude Code through it, because:
+jrules doesn't route Claude Code through it, because:
 - **Your code and secrets go to whichever provider it picks.** Free tiers often log or train on prompts; its own
   catalog flags a number of providers as terms-risky. That contradicts the `/secure` rules this repo enforces.
 - Claude Code's tool use, hooks, and skills are tuned for Claude models. Weaker models make more mistakes, and
   redoing their work costs more than it saves.
-- JRules already cuts cost the safe way: Haiku (`grunt-worker`) for mechanical work, Sonnet (`implementer`,
+- jrules already cuts cost the safe way: Haiku (`grunt-worker`) for mechanical work, Sonnet (`implementer`,
   `council-advisor`) for routine implementation, diff-scoped audits, and on-demand checklists.
 
 Where it *can* make sense: your app's own backend calls for low-stakes, non-sensitive tasks (e.g. rewriting

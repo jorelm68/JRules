@@ -1,4 +1,4 @@
-# JRules
+# jrules
 
 My engineering rulebook for Claude Code, packaged as a **Claude Code plugin** (with its own marketplace). One
 source of truth for how every project is built: git/PR discipline, security, legal risk, performance, and design.
@@ -17,19 +17,19 @@ Set a project up once; after that, prompts don't need to repeat any of it.
 
 ## Using it
 
-**1. On your machine (once)** — every project you open gets JRules:
+**1. On your machine (once)** — every project you open gets jrules:
 ```bash
-git clone https://github.com/jorelm68/JRules && cd JRules
+git clone https://github.com/jorelm68/jrules && cd jrules
 node install.mjs     # installs the plugin at user scope (and removes the old pre-plugin install)
 node tools.mjs       # optional third-party tools (--dry-run to preview)
 ```
 
 **2. In each repo (new or existing)** — open Claude Code in it and run `/jrules-init` (or `/jrules:jrules-init`).
 It scaffolds the per-project files and commits `.claude/settings.json` pointing at this repo, so the project
-carries JRules with it: cloud sessions, other machines, and collaborators get the plugin automatically.
+carries jrules with it: cloud sessions, other machines, and collaborators get the plugin automatically.
 
-**3. Anywhere else (no install)** — tell Claude: *"Set this repo up with JRules — follow BOOTSTRAP.md in
-github.com/jorelm68/JRules."* [BOOTSTRAP.md](BOOTSTRAP.md) is the single-file manual; it also covers non-Claude
+**3. Anywhere else (no install)** — tell Claude: *"Set this repo up with jrules — follow BOOTSTRAP.md in
+github.com/jorelm68/jrules."* [BOOTSTRAP.md](BOOTSTRAP.md) is the single-file manual; it also covers non-Claude
 agents (copy RULES.md as AGENTS.md — a snapshot that won't auto-update).
 
 The repo is public, so any machine or cloud session can fetch the plugin without extra access.
@@ -40,7 +40,7 @@ Edit, commit, push. The plugin is versioned by git commit (no manual version bum
 - this machine: `node install.mjs` (or `claude plugin marketplace update jrules && claude plugin update jrules@jrules`)
 - projects: pick up changes on their next plugin update.
 
-A project's own CLAUDE.md wins on conflicts; a project `.claude/agents/<same-name>.md` overrides a JRules agent.
+A project's own CLAUDE.md wins on conflicts; a project `.claude/agents/<same-name>.md` overrides a jrules agent.
 
 ## End of every task
 

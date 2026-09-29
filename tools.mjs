@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Installs the third-party tools JRules skills rely on (see TOOLS.md), globally for every project.
+// Installs the third-party tools jrules skills rely on (see TOOLS.md), globally for every project.
 // Idempotent: re-running re-installs/updates. Usage:
 //   node tools.mjs              install everything
 //   node tools.mjs design docs  install only these groups (design, browser, docs, supabase, figma)

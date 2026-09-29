@@ -1,4 +1,4 @@
-<!-- JRules Terms of Service template. Fill every {{placeholder}}; delete sections marked [if ...] that don't apply.
+<!-- jrules Terms of Service template. Fill every {{placeholder}}; delete sections marked [if ...] that don't apply.
      Not legal advice — have a lawyer review before launch, especially §13–§15 (arbitration, class waiver). The
      arbitration and class-waiver sections only bind users who actively agreed (clickwrap at sign-up). -->
 
