@@ -1,0 +1,16 @@
+{
+  "name": "jrules",
+  "owner": {
+    "name": "jorelm68"
+  },
+  "metadata": {
+    "description": "JRules \u2014 reusable engineering rulebook for Claude Code projects."
+  },
+  "plugins": [
+    {
+      "name": "jrules",
+      "source": "./",
+      "description": "Engineering standards for every project: git/PR discipline, security, legal-risk, performance, and design."
+    }
+  ]
+}

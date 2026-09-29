@@ -18,13 +18,26 @@ file — for files that already exist, merge the missing JRules pieces in and sh
   `main` with just a README first, so `main` exists to open a PR against).
 
 ## 3. Files (from `templates/`, filling every `{{placeholder}}`)
+- `.claude/settings.json` — merge in `templates/claude-settings.json` (keep existing keys). This pins JRules to the
+  repo itself: anyone or any session (including cloud sessions) opening the project gets the plugin, even on a
+  machine without the user-level install. Commit it.
 - `CLAUDE.md` — project name, purpose, stack, commands, project rules. Keep the `@HANDOFF.md` / `@GOTCHA.md`
   imports at the top. If a CLAUDE.md exists, add only the imports and anything clearly missing; don't restate
-  global JRules rules (they load from `~/.claude/CLAUDE.md` automatically).
+  global JRules rules (they load from the JRules plugin automatically).
 - `HANDOFF.md`, `GOTCHA.md` — seed with what you actually know; empty sections are fine.
 - `docs/KNOWLEDGE.md` — for existing code, build a real first map (delegate the sweep to `Explore` and write the
   map yourself from its report). For an empty project, leave the skeleton.
 - `.github/pull_request_template.md`.
+- **Standards profile** in CLAUDE.md: fill from the code (package.json deps, env var names) or, for a new project,
+  ask in the same one message as step 1 (hosting, auth, DB, payments, email, uploads, minimum user age).
+- `.gitignore` has `.env*` and `!.env.example` (the secrets hook refuses to write an un-ignored `.env`), plus tool
+  scratch dirs: `.screens/`, `.playwright-cli/`, `.design-ref/`, `strix_runs/`.
+- **Web apps only:**
+  - `public/.well-known/security.txt` from `templates/security.txt` (or the framework's static dir).
+  - `.github/dependabot.yml` and `.github/workflows/security.yml` from `templates/github/` (Node projects; adapt
+    the ecosystem otherwise).
+  - Tell the user the one-time next steps: `/design` (creates PRODUCT.md + DESIGN.md), `/legal` (Terms, Privacy,
+    age gate, cookie notice) before launch, and the dashboard/DNS items in the `/secure` skill's `reference/edge.md` (CAA record, WAF).
 - If the project defines `.claude/agents/` with the same names as the global ones (`grunt-worker`, `implementer`),
   tell the user the project copies override the global ones and offer to delete them if they're identical in intent.
 
