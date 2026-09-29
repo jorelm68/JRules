@@ -1,6 +1,6 @@
 ---
 name: ship
-description: Finish a task the JRules way — verify, rebase on main, update shared docs (final PR only), push, and open a PR. Use at the end of every task, or when the user says "ship it", "wrap up", or "open a PR".
+description: Finish a task the jrules way — verify, rebase on main, update shared docs (final PR only), push, and open a PR. Use at the end of every task, or when the user says "ship it", "wrap up", or "open a PR".
 ---
 
 # Ship
@@ -27,7 +27,8 @@ group — has intermediate PRs that must not touch shared docs or any file anoth
 6. **Shared docs — final PR only.** As the last commit (`docs: update handoff, gotchas, knowledge map`):
    - `HANDOFF.md` — rewrite to reflect the state after this PR merges; fold in notes from earlier PRs of the task.
    - `GOTCHA.md` — add traps discovered during the task; remove ones that no longer apply.
-   - `docs/KNOWLEDGE.md` — update nodes/edges/flows the task touched; fix anything that misled you.
+   - `docs/KNOWLEDGE.md` — update nodes/edges/flows and the Index for what the task touched; fix anything that
+     misled you; run `kg.mjs check` (path in the session digest) until it passes.
    - `CLAUDE.md` — only if commands, stack, or project rules changed.
    Also apply the edits other PRs of the group deferred (files they shared).
    Intermediate PR: don't touch those files; put the notes under "Notes for shared docs" in the PR body.

@@ -1,6 +1,6 @@
 {
   "extraKnownMarketplaces": {
-    "jrules": { "source": { "source": "github", "repo": "jorelm68/JRules" } }
+    "jrules": { "source": { "source": "github", "repo": "jorelm68/jrules" } }
   },
   "enabledPlugins": { "jrules@jrules": true }
 }

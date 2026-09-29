@@ -1,6 +1,6 @@
-# JRules — global working agreement
+# jrules — global working agreement
 
-These rules apply to every project (delivered by the JRules plugin, github.com/jorelm68/JRules). A project's own
+These rules apply to every project (delivered by the jrules plugin, github.com/jorelm68/jrules). A project's own
 CLAUDE.md adds project specifics and wins on conflict. Skills and agents named here may appear namespaced as
 `jrules:<name>`. Prefer absolute paths; on Windows the Bash tool is Git Bash.
 
@@ -10,13 +10,15 @@ CLAUDE.md adds project specifics and wins on conflict. Skills and agents named h
   audit the previous PR group (CI, conflicts, review comments, merged/closed), then clean up. Nothing flagged →
   start directly; don't spend tokens re-checking.
 - `HANDOFF.md` and `GOTCHA.md` are imported by the project CLAUDE.md, so they are already in context — act on them.
-- If the project has no `HANDOFF.md`/`GOTCHA.md`/`docs/KNOWLEDGE.md` or no JRules setup, suggest `/jrules-init`.
+- If the project has no `HANDOFF.md`/`GOTCHA.md`/`docs/KNOWLEDGE.md` or no jrules setup, suggest `/jrules-init`.
 
 ## Knowledge graph (token budget)
-- `docs/KNOWLEDGE.md` is the project's map: nodes (modules, data stores, external services, key concepts) with
-  their files, purpose, and edges (depends-on / used-by / writes-to). **Consult it before searching the codebase**
-  and jump straight to the files it names. Fall back to Grep/Glob/Explore only for what the map doesn't cover.
-- If the map was wrong or missing something you had to discover, note it and fix it in the final PR (see below).
+- `docs/KNOWLEDGE.md` is the project's graph: nodes (modules, stores, services, concepts) with files, purpose, and
+  `[[edges]]`. Only its **Index** is in context (injected at session start). **Query it, don't read it:**
+  `kg.mjs query <id>` (node + neighbors), `owner <path>` (which node owns a file and what links to it — check
+  before editing), `check` (stale entries). The session digest prints the exact command. Jump straight to the files
+  it names; fall back to Grep/Glob/Explore only for what the map doesn't cover.
+- If the map was wrong or missing something you had to discover, fix it in the final PR (see below).
 
 ## Delegation (model tiers)
 - **`grunt-worker` (Haiku):** file searches, running lint/typecheck/build/tests, log triage, data sanity checks,
@@ -77,7 +79,8 @@ these areas, load that skill's matching section** (not the whole thing):
   open questions. Rewrite it, don't append a diary; keep it under ~60 lines.
 - `GOTCHA.md` — non-obvious traps: one bullet each, `**Area:** symptom → cause → what to do`. Remove entries that
   no longer apply.
-- `docs/KNOWLEDGE.md` — the knowledge graph above. Update nodes/edges touched by the task; keep entries terse.
+- `docs/KNOWLEDGE.md` — the knowledge graph above. Update nodes/edges touched by the task, keep the `## Index` in
+  sync (one line per node), keep entries terse, and make `kg.mjs check` pass.
 
 ## Reporting
 - Report outcomes faithfully: if tests fail or a step was skipped, say so.

@@ -15,7 +15,7 @@ stacks. Read only the sections you need.
 - **Purge leaked secrets.** Rotate first. Then `git filter-repo --path .env --invert-paths` (or BFG), force-push
   **with the user's explicit OK**, and ask collaborators to re-clone. Turn on GitHub secret scanning + push
   protection. Run `gitleaks detect` over history.
-- JRules' `guard-secrets` hook blocks committing `.env` files, known secret formats, and secret-named public env
+- jrules' `guard-secrets` hook blocks committing `.env` files, known secret formats, and secret-named public env
   vars — don't bypass it; mark genuine test fixtures with `jrules:allow-secret` on the line.
 
 ## §Auth & sessions

@@ -26,7 +26,7 @@ const git = (args) => {
   }
 };
 const block = (msg) => {
-  process.stderr.write(`JRules: ${msg} Create a task branch first: git switch -c <type>/<slug>\n`);
+  process.stderr.write(`jrules: ${msg} Create a task branch first: git switch -c <type>/<slug>\n`);
   process.exit(2);
 };
 

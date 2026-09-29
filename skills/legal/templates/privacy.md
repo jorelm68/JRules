@@ -1,4 +1,4 @@
-<!-- JRules Privacy Policy template. Fill every {{placeholder}} from what the code actually does; the processor
+<!-- jrules Privacy Policy template. Fill every {{placeholder}} from what the code actually does; the processor
      table must list every service that receives user data. Delete [if ...] parts that don't apply.
      Not legal advice — have a lawyer review before launch. -->
 

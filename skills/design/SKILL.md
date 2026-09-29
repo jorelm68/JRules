@@ -1,6 +1,6 @@
 ---
 name: design
-description: JRules design standard and build-verify loop for web UI — sets up PRODUCT.md/DESIGN.md from a reference (awesome-design-md, a screenshot, a live site via skillui, or Figma), builds with design tokens, then screenshots with playwright-cli and audits against web-design-guidelines. Use before building or restyling any page or component, when the user shares a screenshot/site/Figma link to match, or says "make it look better", "polish", "redesign", or "audit the UI".
+description: jrules design standard and build-verify loop for web UI — sets up PRODUCT.md/DESIGN.md from a reference (awesome-design-md, a screenshot, a live site via skillui, or Figma), builds with design tokens, then screenshots with playwright-cli and audits against web-design-guidelines. Use before building or restyling any page or component, when the user shares a screenshot/site/Figma link to match, or says "make it look better", "polish", "redesign", or "audit the UI".
 ---
 
 # Design

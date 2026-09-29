@@ -4,8 +4,8 @@
 # {{Project name}}
 
 {{One-paragraph purpose: what this is, who it's for, what matters most.}}
-Global working rules (git/PR policy, delegation, shared docs) come from the JRules plugin.
-Code map: [docs/KNOWLEDGE.md](docs/KNOWLEDGE.md) — consult it before searching.
+Global working rules (git/PR policy, delegation, shared docs) come from the jrules plugin.
+Code map: [docs/KNOWLEDGE.md](docs/KNOWLEDGE.md) — a graph; query it (`kg.mjs query/owner`) before searching.
 
 ## Stack
 - {{Languages, frameworks, versions, hosting, data stores}}
@@ -21,4 +21,4 @@ Code map: [docs/KNOWLEDGE.md](docs/KNOWLEDGE.md) — consult it before searching
 - {{dev / build / lint / typecheck / test commands}}
 
 ## Project rules
-- {{Project-specific conventions and constraints only — don't repeat the global JRules rules}}
+- {{Project-specific conventions and constraints only — don't repeat the global jrules rules}}

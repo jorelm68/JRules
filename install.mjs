@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-// Installs JRules as a Claude Code plugin at user scope, so every project on this machine gets it. Idempotent.
+// Installs jrules as a Claude Code plugin at user scope, so every project on this machine gets it. Idempotent.
 //   node install.mjs            register this clone as the `jrules` marketplace, install/update jrules@jrules
-//   node install.mjs --github   register github.com/jorelm68/JRules instead (no local clone needed to update)
+//   node install.mjs --github   register github.com/jorelm68/jrules instead (no local clone needed to update)
 // Also removes the pre-plugin install (CLAUDE.md import, skill links, copied agents, settings.json hooks) so
-// nothing loads twice. After editing JRules: re-run this (or `claude plugin marketplace update jrules`).
+// nothing loads twice. After editing jrules: re-run this (or `claude plugin marketplace update jrules`).
 import { execSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -17,20 +17,20 @@ const run = (cmd) => {
   log(`$ ${cmd}`);
   execSync(cmd, { stdio: "inherit" });
 };
-const source = process.argv.includes("--github") ? "jorelm68/JRules" : root;
+const source = process.argv.includes("--github") ? "jorelm68/jrules" : root;
 
-console.log("Removing legacy (pre-plugin) JRules install, if any");
+console.log("Removing legacy (pre-plugin) jrules install, if any");
 const claudeMd = path.join(home, "CLAUDE.md");
 if (fs.existsSync(claudeMd)) {
   const text = fs.readFileSync(claudeMd, "utf8");
-  const kept = text.split("\n").filter((l) => !/^@.*JRules\/global\/CLAUDE\.md\s*$/.test(l)).join("\n").replace(/^\n+/, "");
-  if (kept !== text) { fs.writeFileSync(claudeMd, kept); log("CLAUDE.md: removed JRules import"); }
+  const kept = text.split("\n").filter((l) => !/^@.*jrules\/global\/CLAUDE\.md\s*$/i.test(l)).join("\n").replace(/^\n+/, "");
+  if (kept !== text) { fs.writeFileSync(claudeMd, kept); log("CLAUDE.md: removed jrules import"); }
 }
 const skillsDir = path.join(home, "skills");
 for (const name of fs.existsSync(skillsDir) ? fs.readdirSync(skillsDir) : []) {
   const link = path.join(skillsDir, name);
   try {
-    if (fs.lstatSync(link).isSymbolicLink() && /JRules[\\/]global[\\/]skills/.test(fs.readlinkSync(link))) {
+    if (fs.lstatSync(link).isSymbolicLink() && /jrules[\\/]global[\\/]skills/i.test(fs.readlinkSync(link))) {
       fs.rmSync(link, { force: true });
       log(`skills/${name}: removed legacy link`);
     }
@@ -46,12 +46,12 @@ if (fs.existsSync(settingsPath)) {
   const pre = settings.hooks?.PreToolUse;
   if (pre) {
     const cleaned = pre
-      .map((e) => ({ ...e, hooks: (e.hooks ?? []).filter((h) => !/JRules[\\/]global[\\/]hooks/.test(h.command ?? "")) }))
+      .map((e) => ({ ...e, hooks: (e.hooks ?? []).filter((h) => !/jrules[\\/]global[\\/]hooks/i.test(h.command ?? "")) }))
       .filter((e) => e.hooks.length > 0);
     if (JSON.stringify(cleaned) !== JSON.stringify(pre)) {
       settings.hooks.PreToolUse = cleaned;
       fs.writeFileSync(settingsPath, `${JSON.stringify(settings, null, 2)}\n`);
-      log("settings.json: removed legacy JRules hooks");
+      log("settings.json: removed legacy jrules hooks");
     }
   }
 }
