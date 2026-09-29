@@ -24,6 +24,32 @@ Source of truth: `C:/Users/jorel/JRules` (edit there, never in `~/.claude`).
 - **Keep in the main session:** architecture, data modeling, debugging strategy, design direction, and review of
   subagent output. Give subagents a self-contained brief — they start cold.
 - Do tiny tasks (a single read or one-line edit) inline — a cold subagent costs more than it saves.
+- Audits (security, legal, design, perf) are scoped to the branch diff unless asked for `full`; mechanical scans
+  go to `grunt-worker`, which returns hits only. Screenshots only of changed views.
+
+## Build standards (always on)
+Build secure, legally safe, fast, and polished from the first commit — never "fix it before launch". The project
+CLAUDE.md "Standards profile" says which apply. Full checklists live in skills; **before writing code in one of
+these areas, load that skill's matching section** (not the whole thing):
+- **`/secure`** — auth, sessions, APIs, DB/RLS, uploads, webhooks, payments. Non-negotiable: secrets server-only
+  and never committed (hook-enforced) · RLS on every table · identity/role from the server session, never from the
+  request or client checks · server-side schema validation with whitelisted fields · parameterized SQL · no raw
+  user HTML · HttpOnly cookies, server-side sign-out · one generic login error · rate limits + bot protection on
+  auth and costly endpoints · signed webhooks · atomic check-and-act (no TOCTOU) · strict headers, CSP without
+  `unsafe-inline` scripts · no stack traces to clients · explicit CORS origins.
+- **`/legal`** — sign-up, billing, email, analytics, uploads, new data processors. Age gate, cancel button, delete
+  account, one-click unsubscribe, renewal disclosure, self-hosted fonts, no session replay/pixels, cookie
+  disclosure, privacy policy names every processor. Never collect phone numbers or send SMS unless the user decides to.
+- **`/perf`** — static/CDN pages by default, compressed responses, batched writes, optimistic UI, no `select *`,
+  measure before optimizing.
+- **`/design`** — build to the project's DESIGN.md tokens; screenshot-check changed UI at mobile + desktop before
+  calling it done; alt text on every image; WCAG AA.
+
+## Decisions & docs
+- Before committing to anything expensive to reverse (stack/vendor, data model, auth, billing, security/legal
+  trade-offs, work > ~1 day), or when the user pushes one option and asks if it's good: run **`/council`** — don't
+  just agree. Not for routine work.
+- Unsure of a library's current API or version → look it up with Context7 (if connected), don't code from memory.
 
 ## Git & GitHub policy
 - Never commit or push to `main`/`master`. Start every task on a branch: `<type>/<short-slug>`
