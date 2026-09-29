@@ -12,7 +12,10 @@ Map: [docs/KNOWLEDGE.md](docs/KNOWLEDGE.md) — query with `node scripts/kg.mjs 
   tokens in every session of every project: keep it terse; put detail in skills.
 - `skills/<name>/SKILL.md` (+ `reference/`, `templates/`) — loaded on demand. Descriptions are always-on; keep them
   short and trigger-focused.
+- Vendored third-party skills (`skills/security-audit/`, see its `UPSTREAM.md`) — never edit by hand; refresh with
+  `node scripts/sync-vendored.mjs` and review the diff. Adapt jrules to them in our own skills instead.
 - `scripts/kg.mjs` — knowledge-graph query tool (used by projects via the session digest).
+- `scripts/sync-vendored.mjs` — re-copies vendored skills from upstream and records the commit.
 - `agents/` — subagents. `hooks/hooks.json` + `*.mjs` — hooks (Node, no dependencies; must work on Windows).
 - `install.mjs` (installs the plugin at user scope), `tools.mjs` (third-party tools), `BOOTSTRAP.md` (manual for
   agents pointed at this repo), `TOOLS.md`.

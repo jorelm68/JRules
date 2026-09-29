@@ -27,6 +27,7 @@ git/PR discipline, security, legal risk, performance, and design. Follow the fir
 
 ## What jrules gives a project
 - Always-on rules (RULES.md, injected at session start) and a git/PR digest each session.
-- Skills: `jrules-init`, `ship`, `sync`, `secure`, `legal`, `perf`, `design`, `council`.
+- Skills: `jrules-init`, `ship`, `sync`, `secure`, `security-audit` (Cloudflare's, vendored), `legal`, `perf`,
+  `design`, `council`.
 - Agents: `grunt-worker` (Haiku), `implementer` (Sonnet), `council-advisor` (Sonnet).
 - Hooks: no commits/pushes to `main`; no secrets in frontend code or git; git-pulse change alerts.

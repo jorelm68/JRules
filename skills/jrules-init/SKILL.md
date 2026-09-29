@@ -38,7 +38,8 @@ file — for files that already exist, merge the missing jrules pieces in and sh
   - `.github/dependabot.yml` and `.github/workflows/security.yml` from `templates/github/` (Node projects; adapt
     the ecosystem otherwise).
   - Tell the user the one-time next steps: `/design` (creates PRODUCT.md + DESIGN.md), `/legal` (Terms, Privacy,
-    age gate, cookie notice) before launch, and the dashboard/DNS items in the `/secure` skill's `reference/edge.md` (CAA record, WAF).
+    age gate, cookie notice) before launch, the dashboard/DNS items in the `/secure` skill's `reference/edge.md` (CAA record, WAF),
+    and a `/secure deep` (`security-audit`) run before launch.
 - If the project defines `.claude/agents/` with the same names as the global ones (`grunt-worker`, `implementer`),
   tell the user the project copies override the global ones and offer to delete them if they're identical in intent.
 
