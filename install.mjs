@@ -3,7 +3,8 @@
 //   - ~/.claude/CLAUDE.md        imports global/CLAUDE.md (live — edits in JRules apply immediately)
 //   - ~/.claude/skills/<name>    junction/symlink to global/skills/<name> (live)
 //   - ~/.claude/agents/<name>.md copied from global/agents (re-run after editing agents)
-//   - ~/.claude/settings.json    PreToolUse hook running global/hooks/guard-git.mjs
+//   - ~/.claude/settings.json    PreToolUse hooks: global/hooks/guard-git.mjs (no commits/pushes to main) and
+//                                global/hooks/guard-secrets.mjs (no secrets in frontend code or git)
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -53,14 +54,16 @@ for (const name of fs.readdirSync(path.join(src, "agents"))) {
 // 4. Hooks in settings.json
 const settingsPath = path.join(home, "settings.json");
 const settings = fs.existsSync(settingsPath) ? JSON.parse(fs.readFileSync(settingsPath, "utf8")) : {};
-const hookScript = posix(path.join(src, "hooks", "guard-git.mjs"));
+const hook = (name) => ({ type: "command", command: `node "${posix(path.join(src, "hooks", name))}"` });
+const ours = /guard-(git|secrets)\.mjs/;
 settings.hooks ??= {};
 const pre = (settings.hooks.PreToolUse ?? [])
-  .map((entry) => ({ ...entry, hooks: (entry.hooks ?? []).filter((h) => !h.command?.includes("guard-git.mjs")) }))
+  .map((entry) => ({ ...entry, hooks: (entry.hooks ?? []).filter((h) => !ours.test(h.command ?? "")) }))
   .filter((entry) => entry.hooks.length > 0);
-pre.push({ matcher: "Bash", hooks: [{ type: "command", command: `node "${hookScript}"` }] });
+pre.push({ matcher: "Bash", hooks: [hook("guard-git.mjs"), hook("guard-secrets.mjs")] });
+pre.push({ matcher: "Write|Edit|MultiEdit", hooks: [hook("guard-secrets.mjs")] });
 settings.hooks.PreToolUse = pre;
 fs.writeFileSync(settingsPath, `${JSON.stringify(settings, null, 2)}\n`);
-log("settings.json: guard-git PreToolUse hook installed");
+log("settings.json: guard-git + guard-secrets PreToolUse hooks installed");
 
 console.log("Done. Restart Claude Code sessions to pick up changes.");
